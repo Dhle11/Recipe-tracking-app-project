@@ -10,25 +10,33 @@ import RecipeData from "./RecipeData"
 
   
   function App() {
-  const [recipes, setRecipes] = useState(RecipeData);
-
-  const addRecipe = newRecipe => {
-    setRecipes( currentRecipes => [
-      ...currentRecipes,
-      newRecipe,
-    ] );
-  };
+    const [recipes, setRecipes] = useState(RecipeData);
   
-  return (
-    <div className="App">
-      <header><h1>Delicious Food Recipes</h1></header>
-      <RecipeList
-        recipes={recipes}
-      />
-      <RecipeCreate
-        addRecipe={addRecipe}
-      />
-    </div>
-  );
-}
+    const addRecipe = newRecipe => {
+      setRecipes( currentRecipes => [
+        ...currentRecipes,
+        newRecipe,
+      ] );
+    };
+   
+    const deleteRecipe = indexToDelete => {
+      setRecipes( currentRecipes => {
+        const updatedRecipes = currentRecipes.filter( (recipe, index) => index !== indexToDelete);
+        return updatedRecipes;
+      });
+    };
+    
+    return (
+      <div className="App">
+        <header><h1>Delicious Food Recipes</h1></header>
+        <RecipeList
+          recipes={recipes}
+          deleteRecipe={deleteRecipe}
+        />
+        <RecipeCreate
+          addRecipe={addRecipe}
+        />
+      </div>
+    );
+  }
 export default App;
